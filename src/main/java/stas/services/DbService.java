@@ -32,20 +32,17 @@ public class DbService {
 
         var cell = cellRep.findByNumber(cellNumber).orElse(new CellEntity(cellNumber));
 
-
         stoRep.save(sto);
 
         detailRep.save(detail);
         detail.addSto(sto);
 
-
         cellRep.save(cell);
 
         var stoCell = stoCellRep.findByStoAndCell(sto, cell).orElse(new StoCellEntity(sto, cell, cellRemainder));
         stoCell.setCellRemainder(cellRemainder);
-        cell.getStos().add(stoCell);
-        sto.getCells().add(stoCell);
-
+        cell.getStoCells().add(stoCell);
+        sto.getStoCells().add(stoCell);
 
         stoRep.flush();
         detailRep.flush();
@@ -54,7 +51,7 @@ public class DbService {
 
 
     @Transactional
-    public void deleteSto(String nameSto, Long cellNumber) {
+    public void deleteStoFromCell(String nameSto, Long cellNumber) {
         var stoCellExample = new StoCellEntity();
         stoCellExample.setSto(new StoEntity(nameSto));
         stoCellExample.setCell(new CellEntity(cellNumber));

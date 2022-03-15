@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-
 @Entity
 @Table(name = "stos")
 @Data
@@ -20,7 +19,7 @@ public class StoEntity implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(
@@ -28,7 +27,10 @@ public class StoEntity implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<StoCellEntity> cells = new HashSet<>();
+    private Set<StoCellEntity> stoCells = new HashSet<>();
+
+    @ManyToMany(mappedBy = "stos")
+    private Set<DetailEntity> details = new HashSet<>();
 
 
     public StoEntity(String name) {

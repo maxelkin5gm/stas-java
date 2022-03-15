@@ -2,7 +2,6 @@ package stas.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import stas.entities.id.StoCellKey;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +20,7 @@ public class StoCellEntity implements Serializable {
     @ManyToOne()
     private StoEntity sto;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private CellEntity cell;
 
     @Column(name = "cell_remainder")

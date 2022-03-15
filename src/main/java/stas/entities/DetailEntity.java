@@ -27,7 +27,7 @@ public class DetailEntity implements Serializable {
     @Column(name = "operation_number")
     private String operationNumber;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany()
     private Set<StoEntity> stos = new HashSet<>();
 
 

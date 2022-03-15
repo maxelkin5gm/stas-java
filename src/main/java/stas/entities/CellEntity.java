@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-
 @Entity
 @Table(name = "cells")
 @Data
@@ -25,13 +24,12 @@ public class CellEntity implements Serializable {
             mappedBy = "cell",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<StoCellEntity> stos = new HashSet<>();
+    private Set<StoCellEntity> stoCells = new HashSet<>();
 
 
     public CellEntity(Long number) {
         this.number = number;
     }
-
 
     @Override
     public String toString() {
