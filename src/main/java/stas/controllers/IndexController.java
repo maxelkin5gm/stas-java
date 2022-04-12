@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 import stas.services.FileService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,6 +24,7 @@ public class IndexController implements ErrorController {
 
     @RequestMapping("/error")
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public String handleError(HttpServletRequest request) throws IOException {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
@@ -31,11 +34,9 @@ public class IndexController implements ErrorController {
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 var fileData = fileService.readFile(indexPath);
                 if (fileData != null) return fileData;
-                return "error-404";
-            }
-            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error-500";
-            }
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            } else
+                throw new ResponseStatusException(HttpStatus.valueOf(statusCode));
         }
         return "error";
     }

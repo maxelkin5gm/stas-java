@@ -3,10 +3,7 @@ package stas.controllers;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import stas.repositories.CellRep;
 import stas.repositories.DetailRep;
@@ -15,7 +12,7 @@ import stas.services.DbService;
 import stas.services.admin.DetailStoService;
 import stas.services.admin.StoCellService;
 
-
+@CrossOrigin("*")
 @Controller
 @AllArgsConstructor
 public class MainController {
@@ -29,10 +26,10 @@ public class MainController {
     DbService dbService;
 
 
-
     @GetMapping("/")
     @ResponseBody
-    public String test() {
+    public String test() throws InterruptedException {
+        Thread.sleep(500000);
         return "test";
     }
 
